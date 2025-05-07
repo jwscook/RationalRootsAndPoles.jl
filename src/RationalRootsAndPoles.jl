@@ -8,11 +8,13 @@ numorden(x, ::Nothing) = 1
 rational(x, roots, poles=nothing) = numorden(x, roots) / numorden(x, poles)
 onlyfinite(x::Number) = isfinite(x) ? x : zero(typeof(x))
 
-function solve(f::Function; lowerbounds, upperbounds, nroots::Int, npoles::Int, nsamples1D::Int=14, nretries=0, atol=1e-3,
-    timelimitpertry=5) where {F<:Function}
+function solve(f::Function; lowerbounds, upperbounds, nroots::Int, npoles::Int, nsamples1D::Int=14,
+    nretries=0, atol=1e-3, timelimitpertry=5, extraxys=[], extrafxys=[]) where {F<:Function}
   x1D = 1/2nsamples1D:1/nsamples1D:1-1/2nsamples1D
   xys = [(x, y) .* (upperbounds .- lowerbounds) .+ lowerbounds for x in x1D, y in x1D][:]
   fxys = [f(xy) for xy in xys][:]
+  xys = vcat(xys, extraxys)
+  fxys = vcat(fxys, extrafxys)
   return solve(f, xys, fxys; nroots=nroots, npoles=npoles, nsamples1D=nsamples1D, nretries=nretries, atol=atol, timelimitpertry=timelimitpertry)
 end
 

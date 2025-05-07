@@ -18,7 +18,7 @@ function compareunsortedpairwise(a::Vector{Float64}, b; atol, rtol)
 end
 
 @testset "RationalRootsAndPoles.jl" begin
-  nsamples1D = 14
+  nsamples1D = 20
   for nroots = 1:3, npoles = 0:2
     @testset "$nroots roots, $npoles poles" begin
       for i in 1:10
