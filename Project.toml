@@ -1,0 +1,9 @@
+name = "RationalRootsAndPoles"
+uuid = "72d72f20-682d-48e8-b9cf-7d29065429e9"
+authors = ["James Cook <cookjws@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+BlackBoxOptim = "a134a8b2-14d6-55f6-9291-3336d3ab0209"
+LsqFit = "2fda8390-95c7-5789-9bda-21331edee243"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
