@@ -16,7 +16,6 @@ function solve(f::Function; lowerbounds, upperbounds, nroots::Int, npoles::Int, 
   return solve(f, xys, fxys; nroots=nroots, npoles=npoles, nsamples1D=nsamples1D, nretries=nretries, atol=atol, timelimitpertry=timelimitpertry)
 end
 
-
 function solve(f::Function, xys, fxys; nroots::Int, npoles::Int, nsamples1D::Int=14, nretries=0, atol=1e-3,
     timelimitpertry=5) where {F<:Function}
   dims = 2nroots + 2npoles
@@ -43,7 +42,5 @@ function solve(f::Function, xys, fxys; nroots::Int, npoles::Int, nsamples1D::Int
     end
   end
 end
-
-greet() = print("Hello World!")
 
 end # module RationalRootsAndPoles
