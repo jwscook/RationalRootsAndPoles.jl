@@ -33,6 +33,8 @@ function solve(f::Function, xys, fxys; nroots::Int, npoles::Int, nsamples1D::Int
     p = sortperm(abs.(fsols))
     solution = solution[:, p]
     roots, poles = rootsandpoles(solution)
+    roots = [roots[i:i+1] for i in 1:2:2nroots]
+    poles = [poles[i:i+1] for i in 1:2:2npoles]
     if bf < atol || ntries >= nretries
       reason = bf < atol ? :converged : :maxretries 
       return (roots=roots, poles=poles, reason=reason, values=fsols, error=bf, ntries=ntries)

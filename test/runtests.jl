@@ -4,13 +4,13 @@ using BlackBoxOptim
 using Random
 Random.seed!(0)
 
-function compareunsortedpairwise(a, b; atol, rtol)
-  @assert length(a) == length(b)
+function compareunsortedpairwise(a::Vector{Float64}, b; atol, rtol)
+  @assert length(a) == 2length(b)
   allpasses = true
   for i in 1:2:length(a)
     thispass = false
-    for j in 1:2:length(b)
-      thispass |= isapprox(a[i:i+1], b[j:j+1]; atol=atol, rtol=rtol)
+    for j in b
+      thispass |= isapprox(a[i:i+1], j; atol=atol, rtol=rtol)
     end
     allpasses &= thispass
   end
