@@ -3,12 +3,12 @@ using BlackBoxOptim
 
 
 complexroots(roots::Vector{<:Real}) = (r[1] + im * r[2] for r in eachcol(reshape(roots, 2, length(roots) ÷ 2)))
-numden(x, roots) = prod(x[1] + im * x[2] - r for r in complexroots(roots); init=one(eltype(x)))
-numden(x, ::Nothing) = 1
-rational(x, roots, poles=nothing) = numden(x, roots) / numden(x, poles)
+numorden(x, roots) = prod(x[1] + im * x[2] - r for r in complexroots(roots); init=one(eltype(x)))
+numorden(x, ::Nothing) = 1
+rational(x, roots, poles=nothing) = numorden(x, roots) / numorden(x, poles)
 onlyfinite(x::Number) = isfinite(x) ? x : zero(typeof(x))
 
-function solve(f::Function; lowerbounds, upperbounds, nroots::Int, npoles::Int, nsamples1D::Int, nretries=0, atol=1e-3,
+function solve(f::Function; lowerbounds, upperbounds, nroots::Int, npoles::Int, nsamples1D::Int=14, nretries=0, atol=1e-3,
     timelimitpertry=5) where {F<:Function}
   x1D = 1/2nsamples1D:1/nsamples1D:1-1/2nsamples1D
   xys = [(x, y) .* (upperbounds .- lowerbounds) .+ lowerbounds for x in x1D, y in x1D][:]
@@ -17,10 +17,10 @@ function solve(f::Function; lowerbounds, upperbounds, nroots::Int, npoles::Int, 
 end
 
 
-function solve(f::Function, xys, fxys; nroots::Int, npoles::Int, nsamples1D::Int, nretries=0, atol=1e-3,
+function solve(f::Function, xys, fxys; nroots::Int, npoles::Int, nsamples1D::Int=14, nretries=0, atol=1e-3,
     timelimitpertry=5) where {F<:Function}
-  dims = 2 * nroots + 2 * npoles
-  rootsandpoles(p) = (p[1:2 * nroots], p[2 * nroots + 1:end])
+  dims = 2nroots + 2npoles
+  rootsandpoles(p) = (p[1:2nroots], p[2nroots + 1:end])
   objective(p) = sum(onlyfinite(abs(fxyi - rational(xyi, rootsandpoles(p)...))) for (xyi, fxyi) in zip(xys, fxys))
   ntries = 0
   while true

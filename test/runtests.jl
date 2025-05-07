@@ -18,11 +18,6 @@ function compareunsortedpairwise(a, b; atol, rtol)
 end
 
 @testset "RationalRootsAndPoles.jl" begin
-  #complexroots(roots::Vector{<:Real}) = (r[1] + im * r[2] for r in eachcol(reshape(roots, 2, length(roots) ÷ 2)))
-  #bar(x, roots) = prod(x[1] + im * x[2] - r for r in complexroots(roots); init=one(eltype(x)))
-  #bar(x, ::Nothing) = 1
-  #foo(x, roots, poles=nothing) = bar(x, roots) / bar(x, poles)
-
   nsamples1D = 14
   for nroots = 1:3, npoles = 0:2
     @testset "$nroots roots, $npoles poles" begin
